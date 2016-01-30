@@ -1,8 +1,6 @@
 require 'rake'
 
 BUILD_PATH="build"
-CLASS_PATH = "-cp .:/usr/share/java/antlr-complete.jar"
-JAVA = "java #{CLASS_PATH}"
 
 task :clean do
   puts "clean"
@@ -24,5 +22,5 @@ task :tree, [:grammar, :input_file] => :build do |task, args|
   start_rule = args[:start_rule]
 
   puts "Parse #{input_file} with #{grammar} grammar"
-  `cd #{BUILD_PATH}; #{JAVA} org.antlr.v4.runtime.misc.TestRig #{grammar} #{start_rule} -gui ../#{input_file}`
+  `cd #{BUILD_PATH}; grun #{grammar} #{start_rule} -gui ../#{input_file}`
 end
