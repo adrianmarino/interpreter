@@ -1,9 +1,10 @@
 class Integer
-  def initialize(value)
-    @value = value
+  def initialize(a, b)
+    @a = a
+    @b = b
   end
 
-  def value
-    @value
+  def a
+    @a
   end
 end

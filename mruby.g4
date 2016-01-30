@@ -1,4 +1,4 @@
-grammar ruby;
+grammar mruby;
 //
 //
 // ----------------------------------------------------------------------------
@@ -12,36 +12,47 @@ NUMBER
   | '.'DIGIT+
   | DIGIT+
   ;
-IDENTIFIER: LETTER (LETTER | DIGIT)*;
-AT: '@';
-DAT: '@@';
-NEWLINE: '\r'?'\n';
-WS: [ \t]+ -> skip;
-LINE_COMMENT: '#' .*? NEWLINE -> skip;
-COMMENT: '=begin' (COMMENT|.)*? '=end' NEWLINE? -> skip;
+IDENTIFIER
+  : LETTER (LETTER | DIGIT)*
+  ;
+AT: '@'
+  ;
+DAT: '@@'
+  ;
+NEWLINE
+  : '\r'?'\n'
+  ;
+WS: [ \t]+ -> skip
+  ;
+LINE_COMMENT
+  : '#' .*? NEWLINE -> skip
+  ;
+COMMENT
+  : '=begin' (COMMENT|.)*? '=end' NEWLINE? -> skip
+  ;
 //
 //
 // ----------------------------------------------------------------------------
 // Grammar rules
 // ----------------------------------------------------------------------------
-program: ( class_def NEWLINE+ | statement NEWLINE+ )*;
-
+program
+  : (class_def NEWLINE+ | statement NEWLINE+)*
+  ;
 class_def
-  : 'class' class_name (NEWLINE | '<' class_parent NEWLINE )
-      class_body
+  : 'class' class_name (NEWLINE | '<' class_parent NEWLINE ) class_body
     'end'
   ;
 
 class_name: IDENTIFIER;
 class_parent: IDENTIFIER;
 class_body
-  : (statement NEWLINE)*
-  | (method_def NEWLINE)*
+  : ((statement NEWLINE) | (method_def NEWLINE))+
   ;
 method_def
-  : 'def' (class_name '.' | 'self' '.')? method_name ((method_par)* | ( '(' method_par (',' method_par )* ')' )* ) NEWLINE+
+  : 'def' (class_name '.' | 'self' '.')?
+      method_name ((method_par)* | ( '(' method_par (',' method_par )* ')' )* ) NEWLINE?
       method_body
-    'end'
+    'end' NEWLINE*
   ;
 
 method_name: IDENTIFIER;
@@ -55,7 +66,7 @@ statement
 	| 'loop' 'do' NEWLINE block 'end'
 	| 'yield' '(' operando ')'
   | 'return' (operando  | '('operando ')' )
-  | 'return' (booleani | '(' booleani ')' )
+  | 'return' (bool | '(' bool ')' )
   | 'puts' statement
 	| /* @@id = (number | id | string) */
     (DAT IDENTIFIER) '=' (operando | '(' operando_par ')' )
@@ -82,14 +93,14 @@ statement
 
 block: (statement NEWLINE)+;
 
-// condition or operation
+// Condition or operation
 condition
   : // condition operator (IDENTIFIER | NUMBER)
-    booleani
-  | booleani ('&' | '|') booleani
+    bool
+  | bool ('&' | '|') bool
   | '(' condition ')'
-  | booleani '|' condition
-  | booleani '&' booleani ('&' | '|') condition
+  | bool '|' condition
+  | bool '&' bool ('&' | '|') condition
   ;
 
 // math instruction
@@ -122,7 +133,7 @@ operando
 	   ( 'do' '|' IDENTIFIER '|' NEWLINE block 'end')? | instruction | '(' instruction_par ')'
   ;
 
-booleani
+bool
   : 'true'
   | 'false'
   | operando ( '<' operando | '<=' operando | '>=' operando | '>'  operando | '==' operando  )
