@@ -42,13 +42,13 @@ KEYWORD_PARAM_NAME
 // Grammar rules
 // ----------------------------------------------------------------------------
 ruml
-  : (module_def NEWLINE+ | class_def NEWLINE+)*
+  : (module_def NEWLINE* | class_def NEWLINE*)*
   ;
 //
 // Module
 //
 module_def
-  : 'module' module_name NEWLINE+ body 'end'
+  : 'module' module_name NEWLINE* body 'end'
   ;
 module_name
   : IDENTIFIER
@@ -57,7 +57,7 @@ module_name
 // Class
 //
 class_def
-  : 'class' class_name ('<' super_class_name)? NEWLINE+ body 'end'
+  : 'class' class_name ('<' super_class_name)? NEWLINE* body 'end'
   ;
 class_name
   : IDENTIFIER

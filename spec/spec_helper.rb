@@ -1,6 +1,5 @@
 require 'bundler/setup'
 Bundler.setup(:default, :test)
-
 require 'pry'
 require 'ruml'
 
