@@ -21,6 +21,21 @@ LINE_COMMENT
 COMMENT
   : '=begin' (COMMENT|.)*? '=end' NEWLINE? -> skip
   ;
+SYMBOL
+  : ':' IDENTIFIER
+  ;
+NUMBER
+  : DIGIT+('.'DIGIT)*
+  | '.'DIGIT+
+  | DIGIT+
+  ;
+STRING
+  : '\'' .*? '\''
+  | '"' .*? '"'
+  ;
+KEYWORD_PARAM_NAME
+  : IDENTIFIER ':'
+  ;
 //
 //
 // ----------------------------------------------------------------------------
@@ -62,6 +77,9 @@ include_def
 extend_def
   : 'extend' module_name
   ;
+attributes_def
+  : ('attr_reader' | 'attr_writer' | 'attr_accessor') SYMBOL (',' SYMBOL)*
+  ;
 class_method_def
   : 'def' class_method_name params NEWLINE+ 'end'
   ;
@@ -75,14 +93,31 @@ instance_method_name
   : IDENTIFIER
   ;
 params
-  : ((param)* | ( '(' param (',' param )* ')' )* )
+  : param*
+  | ( '(' param (',' param )* ')' )*
   ;
 param
+  : param_value
+  | keyword_param
+  | default_param
+  ;
+param_value
   : IDENTIFIER
   ;
-attributes_def
-  : ('attr_reader' | 'attr_writer' | 'attr_accessor') symbol (',' symbol)*
+keyword_param
+  : keyword_param_name value?
   ;
-symbol
-  : ':' IDENTIFIER
+keyword_param_name
+  : KEYWORD_PARAM_NAME
+  ;
+default_param
+  : default_param_name '=' value
+  ;
+default_param_name
+  : IDENTIFIER
+  ;
+value
+  : STRING
+  | SYMBOL
+  | NUMBER
   ;

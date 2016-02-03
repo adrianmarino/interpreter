@@ -6,7 +6,7 @@ class Integer < Number
   attr_writer :x
   attr_accessor :c
 
-  def Integer.class_method_a(a)
+  def Integer.class_method_a(a: "a", b: :b, c:, d = "d")
   end
 
   def self.class_method_b(a)
