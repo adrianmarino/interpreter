@@ -27,10 +27,22 @@ COMMENT
 // Grammar rules
 // ----------------------------------------------------------------------------
 program
-  : (class_def NEWLINE+)*
+  : (module_def NEWLINE+ | class_def NEWLINE+)*
   ;
+//
+// Module
+//
+module_def
+  : 'module' module_name NEWLINE+ body 'end'
+  ;
+module_name
+  : IDENTIFIER
+  ;
+//
+// Class
+//
 class_def
-  : 'class' class_name ('<' super_class_name)? NEWLINE+ class_body 'end'
+  : 'class' class_name ('<' super_class_name)? NEWLINE+ body 'end'
   ;
 class_name
   : IDENTIFIER
@@ -38,16 +50,25 @@ class_name
 super_class_name
   : IDENTIFIER
   ;
-class_body
-  : (attribute NEWLINE+| (class_method | instance_method) NEWLINE+)*
+//
+// Body
+//
+body
+  : ( (include_def | extend_def | attributes_def | class_method_def | instance_method_def ) NEWLINE+ )*
   ;
-class_method
+include_def
+  : 'include' module_name
+  ;
+extend_def
+  : 'extend' module_name
+  ;
+class_method_def
   : 'def' class_method_name params NEWLINE+ 'end'
   ;
 class_method_name
   : (class_name '.' | 'self.' )? IDENTIFIER
   ;
-instance_method
+instance_method_def
   : 'def' instance_method_name params NEWLINE+ 'end'
   ;
 instance_method_name
@@ -59,9 +80,9 @@ params
 param
   : IDENTIFIER
   ;
-attribute
-  : ('attr_reader' | 'attr_writer' | 'attr_accessor') variable (',' variable)*
+attributes_def
+  : ('attr_reader' | 'attr_writer' | 'attr_accessor') symbol (',' symbol)*
   ;
-variable
+symbol
   : ':' IDENTIFIER
   ;

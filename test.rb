@@ -1,4 +1,7 @@
 class Integer < Number
+  include Enumerable
+  extend self
+
   attr_reader :a, :b, :c
   attr_writer :x
   attr_accessor :c
