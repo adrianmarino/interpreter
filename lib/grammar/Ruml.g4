@@ -1,4 +1,4 @@
-grammar ruml;
+grammar Ruml;
 //
 //
 // ----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ KEYWORD_PARAM_NAME
 // ----------------------------------------------------------------------------
 // Grammar rules
 // ----------------------------------------------------------------------------
-program
+ruml
   : (module_def NEWLINE+ | class_def NEWLINE+)*
   ;
 //
@@ -80,6 +80,9 @@ extend_def
 attributes_def
   : ('attr_reader' | 'attr_writer' | 'attr_accessor') SYMBOL (',' SYMBOL)*
   ;
+//
+// Method
+//
 class_method_def
   : 'def' class_method_name params NEWLINE+ 'end'
   ;
@@ -92,6 +95,9 @@ instance_method_def
 instance_method_name
   : IDENTIFIER
   ;
+//
+// Method param
+//
 params
   : param*
   | ( '(' param (',' param )* ')' )*
