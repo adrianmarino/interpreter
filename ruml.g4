@@ -39,19 +39,25 @@ super_class_name
   : IDENTIFIER
   ;
 class_body
-  : (attribute NEWLINE+| method_def NEWLINE+)*
+  : (attribute NEWLINE+| (class_method | instance_method) NEWLINE+)*
   ;
-method_def
-  : 'def' method_name method_params NEWLINE+ 'end'
+class_method
+  : 'def' class_method_name params NEWLINE+ 'end'
   ;
-method_name
+class_method_name
   : (class_name '.' | 'self.' )? IDENTIFIER
   ;
-method_par
+instance_method
+  : 'def' instance_method_name params NEWLINE+ 'end'
+  ;
+instance_method_name
   : IDENTIFIER
   ;
-method_params
-  : ((method_par)* | ( '(' method_par (',' method_par )* ')' )* )
+params
+  : ((param)* | ( '(' param (',' param )* ')' )* )
+  ;
+param
+  : IDENTIFIER
   ;
 attribute
   : ('attr_reader' | 'attr_writer' | 'attr_accessor') variable (',' variable)*

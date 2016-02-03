@@ -1,20 +1,17 @@
 class Integer < Number
-
   attr_reader :a, :b, :c
-
   attr_writer :x
-
   attr_accessor :c
 
-  def action_a(a)
-
+  def Integer.class_method_a(a)
   end
 
-  def action_b(a, b)
+  def self.class_method_b(a)
+  end
 
+  def instance_method(a, b)
   end
 end
 
 class Number
-
 end
