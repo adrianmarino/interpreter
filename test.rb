@@ -1,10 +1,20 @@
-class Integer
-  def initialize(a, b)
-    @a = a
-    @b = b
+class Integer < Number
+
+  attr_reader :a, :b, :c
+
+  attr_writer :x
+
+  attr_accessor :c
+
+  def action_a(a)
+
   end
 
-  def a
-    @a
+  def action_b(a, b)
+
   end
+end
+
+class Number
+
 end
