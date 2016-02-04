@@ -11,16 +11,16 @@ module Ruml
         let(:input) { "class String end"}
 
         it "returns a do diagram with a class representation" do
-          expect(results).to eq(<<-DOT.unindent)
-digraph hierarchy {
-  size="5,5"
-  node[shape=record,style=filled,fillcolor=gray95]
-  edge[dir=back, arrowtail=empty]
+          expect(results).to eq(<<-DOT.strip_heredoc)
+            digraph hierarchy {
+              size="5,5"
+              node[shape=record,style=filled,fillcolor=gray95]
+              edge[dir=back, arrowtail=empty]
 
-  "String"[label = "{String}"]
+              "String"[label = "{String}"]
 
-}
-DOT
+            }
+          DOT
         end
       end
     end

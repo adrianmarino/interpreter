@@ -67,15 +67,15 @@ module Ruml
     private
 
     def diagram(content)
-      <<-DOT.unindent
-digraph hierarchy {
-  size="5,5"
-  node[shape=record,style=filled,fillcolor=gray95]
-  edge[dir=back, arrowtail=empty]
+      <<-DOT.strip_heredoc
+        digraph hierarchy {
+          size="5,5"
+          node[shape=record,style=filled,fillcolor=gray95]
+          edge[dir=back, arrowtail=empty]
 
-  #{content}
-}
-DOT
+          #{content}
+        }
+      DOT
     end
   end
 end
