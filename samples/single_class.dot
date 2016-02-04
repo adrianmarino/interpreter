@@ -3,5 +3,9 @@ digraph hierarchy {
   node[shape=record,style=filled,fillcolor=gray95]
   edge[dir=back, arrowtail=empty]
 
-  1[label = "{String}"]
+  "String"[label = "{String}"]
+
+  "Integer"[label = "{Integer}"]
+
+  "String" -> "Integer" 
 }

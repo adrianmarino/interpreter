@@ -4,6 +4,7 @@ require "ruml/path"
 Path.classes.each { |path| $CLASSPATH << path }
 require 'ruml'
 require 'pry'
+require 'heredoc_unindent'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

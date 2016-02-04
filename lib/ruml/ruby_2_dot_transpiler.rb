@@ -25,8 +25,7 @@ module Ruml
     end
 
     def compile
-      visitor = VisitorImpl.new
-      visitor.visit(@parser.ruml)
+      VisitorImpl.new.visit(@parser.ruml)
     end
   end
 end

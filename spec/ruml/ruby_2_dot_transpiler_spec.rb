@@ -12,14 +12,15 @@ module Ruml
 
         it "returns a do diagram with a class representation" do
           expect(results).to eq(<<-DOT.unindent)
-            digraph hierarchy {
-              size="5,5"
-              node[shape=record,style=filled,fillcolor=gray95]
-              edge[dir=back, arrowtail=empty]
+digraph hierarchy {
+  size="5,5"
+  node[shape=record,style=filled,fillcolor=gray95]
+  edge[dir=back, arrowtail=empty]
 
-              1[label = "{String}"]
-            }
-          DOT
+  "String"[label = "{String}"]
+
+}
+DOT
         end
       end
     end
