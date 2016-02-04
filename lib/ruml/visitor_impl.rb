@@ -6,7 +6,7 @@ module Ruml
   class VisitorImpl < RumlBaseVisitor
 
     def visitRuml(ctx)
-      diagram(visit(ctx.class_def(0)))
+      diagram(ctx.class_def(0) ? visit(ctx.class_def(0)) : "")
     end
 
     def visitClass_def(ctx)
@@ -72,7 +72,6 @@ module Ruml
           size="5,5"
           node[shape=record,style=filled,fillcolor=gray95]
           edge[dir=back, arrowtail=empty]
-
           #{content}
         }
       DOT

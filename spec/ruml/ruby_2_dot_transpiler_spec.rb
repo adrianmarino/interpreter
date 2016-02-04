@@ -7,20 +7,26 @@ module Ruml
 
       subject { described_class.new(input) }
 
-      context "when compile an empty ruby class" do
-        let(:input) { "class String end"}
+      context "when compile and empty input" do
+        let(:input) { "" }
 
-        it "returns a do diagram with a class representation" do
+        it "returns a dot empty diagram" do
           expect(results).to eq(<<-DOT.strip_heredoc)
             digraph hierarchy {
               size="5,5"
               node[shape=record,style=filled,fillcolor=gray95]
               edge[dir=back, arrowtail=empty]
-
-              "String"[label = "{String}"]
-
+              
             }
           DOT
+        end
+      end
+
+      context "when compile an empty ruby class" do
+        let(:input) { "class String end"}
+
+        it "returns a dot diagram with a class box" do
+          expect(results).to include("\"String\"[label = \"{String}\"]")
         end
       end
     end
