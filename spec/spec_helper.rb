@@ -1,7 +1,9 @@
 require 'bundler/setup'
 Bundler.setup(:default, :test)
-require 'pry'
+require "ruml/path"
+Path.classes.each { |path| $CLASSPATH << path }
 require 'ruml'
+require 'pry'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
