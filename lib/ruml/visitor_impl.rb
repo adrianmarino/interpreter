@@ -1,37 +1,37 @@
 import 'RumlBaseVisitor'
 import 'RumlLexer'
-require 'ruml/class_box'
+require 'ruml/dot/diagram_builder'
 
 module Ruml
   class VisitorImpl < RumlBaseVisitor
 
     def visitRuml(ctx)
-      diagram(visit_and_join(ctx.module_def) + visit_and_join(ctx.class_def))
+      @diagram_builder = Dot::DiagramBuilder.new
+      visitChildren(ctx)
+      @diagram_builder.build
     end
 
     def visitModule_def(ctx)
-      @builder = ModuleBox.new(ctx.IDENTIFIER)
+      @member_builder = @diagram_builder.module_box(ctx.IDENTIFIER.getText)
       visit(ctx.body)
-      @builder.build
     end
 
     def visitClass_def(ctx)
-      @builder = ClassBox.new(visit(ctx.class_name))
-      @builder.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
+      @member_builder = @diagram_builder.class_box(visit(ctx.class_name))
+      @member_builder.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
       visit(ctx.body)
-      @builder.build
     end
 
     def visitAttributes_def(ctx)
-      ctx.SYMBOL.each { |node| @builder.attribute(node.getText) }
+      ctx.SYMBOL.each { |node| @member_builder.attribute(node.getText) }
     end
 
     def visitInclude_def(ctx)
-      @builder.include(ctx.IDENTIFIER.getText)
+      @member_builder.include(ctx.IDENTIFIER.getText)
     end
 
     def visitExtend_def(ctx)
-      @builder.extend(ctx.IDENTIFIER.getText)
+      @member_builder.extend(ctx.IDENTIFIER.getText)
     end
 
     def visitClass_name(ctx)
@@ -43,7 +43,7 @@ module Ruml
     end
 
     def visitInstance_method_def(ctx)
-      @builder.method(visit(ctx.instance_method_name), visit(ctx.params))
+      @member_builder.method(visit(ctx.instance_method_name), visit(ctx.params))
     end
 
     def visitParams(ctx)
@@ -76,23 +76,6 @@ module Ruml
 
     def visitNumberValue(ctx)
       ctx.NUMBER.getText
-    end
-
-    private
-
-    def diagram(content)
-      <<-DOT.strip_heredoc
-digraph hierarchy {
-  size="5,5"
-  node[shape=record,style=filled,fillcolor=gray95]
-  edge[dir=back, arrowtail=empty]
-#{content}
-}
-DOT
-    end
-
-    def visit_and_join(nodes)
-      nodes.map { |node| visit(node) }.join('')
     end
   end
 end

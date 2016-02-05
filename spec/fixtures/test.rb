@@ -1,25 +1,40 @@
-class Integer < Number
-  include Enumerable
-  extend self
-
-  attr_reader :a, :b, :c
-  attr_writer :x
-  attr_accessor :c
-
-  def Integer.class_method_a(a: "a", b: :b, c:, d = "d")
-  end
-
-  def self.class_method_b(a)
-  end
-
-  def instance_method(a, b)
-  end
+module Vehicle
 end
 
-class Number
-  attr_accessor :c
+class Key
 end
 
-module Enumerable
-  attr_accessor :c
+class Wheel
+  attr_reader :inches
+end
+
+class Bodyshop
+  attr_reader :doors
+end
+
+class Car
+  include Vehicle
+
+  attr_reader :engine, :wheels, :bodyshop
+
+  def initialize(engine, wheels, bodyshop)
+  end
+
+  def start_engine(key)
+  end
+
+  def stop_engine(key)
+  end
+
+  def fuelling(amount: 50.5)
+  end
+
+  def acelerate(ratio     =    10)
+  end
+
+  def brake(ratio=10)
+  end
+
+  def turn(direction:, degree:10)
+  end
 end

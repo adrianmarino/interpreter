@@ -22,7 +22,7 @@ module Ruml
         end
       end
 
-      context "when compile empty class" do
+      context "when compile an empty class" do
         let(:input) { "class Card end" }
 
         it "returns empty class box" do
@@ -38,11 +38,11 @@ module Ruml
         end
 
         it "return an inheritance association" do
-          expect(results).to include("\"Vehicle\"->\"Card\"[style=filled, label=is, fontcolor=darkblue]")
+          expect(results).to include("\"Vehicle\"->\"Card\"[style=filled, label=Is, fontcolor=darkblue]")
         end
       end
 
-      context "when compile class with attrs" do
+      context "when compile a class with attrs" do
         let(:input) do
           <<-DOC
             class Card
@@ -52,11 +52,11 @@ module Ruml
         end
 
         it "returns class box with attrs" do
-          expect(results).to include("\"Card\"[label = \"{Card|:wheels\\n:engine\\n:bodyshop\\n}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card|wheels\\nengine\\nbodyshop\\n}\"]")
         end
       end
 
-      context "when compile class with a module included" do
+      context "when compile a class with a module included" do
         let(:input) do
           <<-DOC
             class Card
@@ -70,11 +70,11 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=include, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include, fontcolor=darkblue]")
         end
       end
 
-      context "when compile class with self include" do
+      context "when compile a class with self include" do
         let(:input) do
           <<-DOC
             class Card
@@ -88,11 +88,11 @@ module Ruml
         end
 
         it "return an include self association" do
-          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=include, fontcolor=darkblue]")
+          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=Include, fontcolor=darkblue]")
         end
       end
 
-      context "when compile class that extend from module" do
+      context "when compile a class that extend from module" do
         let(:input) do
           <<-DOC
             class Card
@@ -106,11 +106,11 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend, fontcolor=darkblue]")
         end
       end
 
-      context "when compile class that extend from self" do
+      context "when compile a class that extend from self" do
         let(:input) do
           <<-DOC
             class Card
@@ -124,11 +124,11 @@ module Ruml
         end
 
         it "return an extend self association" do
-          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
+          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=Extend, fontcolor=darkblue]")
         end
       end
 
-      context "when compile module with a module included" do
+      context "when compile a module with a module included" do
         let(:input) do
           <<-DOC
             module Card
@@ -142,11 +142,11 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=include, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include, fontcolor=darkblue]")
         end
       end
 
-      context "when compile module that extend from module" do
+      context "when compile a module that extend from module" do
         let(:input) do
           <<-DOC
             module Card
@@ -160,11 +160,11 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend, fontcolor=darkblue]")
         end
       end
 
-      context "when compile class with a instance method with params" do
+      context "when compile a class with a instance method with params" do
         let(:input) do
           <<-DOC
             class Card
@@ -179,7 +179,7 @@ module Ruml
         end
       end
 
-      context "when compile class with a instance method with default params" do
+      context "when compile a class with a instance method with default params" do
         let(:input) do
           <<-DOC
             class Card
@@ -195,7 +195,7 @@ module Ruml
         end
       end
 
-      context "when compile class with a instance method with keyword params" do
+      context "when compile a class with an instance method with keyword params" do
         let(:input) do
           <<-DOC
             class Card
@@ -208,6 +208,32 @@ module Ruml
         it "returns class box with a method with keyword params" do
           expect(results).to include(
             "\"Card\"[label = \"{Card|#add_wheel(wheel: 'normal', number: 4)\\n}\"]")
+        end
+      end
+
+      context "when compile a class with a composed object" do
+        let(:input) do
+          <<-DOC
+            class Engine
+            end
+
+            class Card
+              attr_reader :engine
+            end
+          DOC
+        end
+
+        it "returns an engine class box" do
+          expect(results).to include("\"Engine\"[label = \"{Engine}\"]")
+        end
+
+        it "returns a car class box with an engine composition" do
+          expect(results).to include("\"Card\"[label = \"{Card|engine\\n}\"]")
+        end
+
+        it "return a composition association" do
+          expect(results).to include(
+            "\"Card\"->\"Engine\"[style=filled, label=Has, fontcolor=darkblue, arrowtail=odiamond]")
         end
       end
     end
