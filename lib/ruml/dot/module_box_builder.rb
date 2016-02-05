@@ -50,9 +50,14 @@ module Ruml
       private
 
       def add_compositions(objects)
-        associations = objects.map { |obj| obj.name.downcase } & @members[:attributes].map(&:singularize)
-        associations.each do |association|
-          append_association_with(association.capitalize, :filled, 'Has', :in, :odiamond)
+        names = objects.map { |obj| obj.name.downcase }
+
+        associations = @members[:attributes].map do |attr|
+          [attr.singularize.capitalize, attr.singular? ? :one : :many] if names.include?(attr.singularize)
+        end.compact
+
+        associations.each do |name, type|
+          append_association_with(name.capitalize, :filled, "\"Has #{type}\"", :in, :odiamond)
         end
       end
 
@@ -76,7 +81,10 @@ module Ruml
         begin_box
         append(:attributes)
         append(:methods) do |(name, params, type)|
-          "#{type == :class ? "." : "#"}#{name}(#{params.join(', ')})"
+          signature = type == :class ? '.' : '#'
+          signature += name
+          signature += "(#{params.join(', ')})" if params.any?
+          signature
         end
         end_box
       end

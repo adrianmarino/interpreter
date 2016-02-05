@@ -248,7 +248,7 @@ module Ruml
 
         it "return a composition association" do
           expect(results).to include(
-            "\"Card\"->\"Engine\"[style=filled, label=Has, fontcolor=darkblue, arrowtail=odiamond]")
+            "\"Card\"->\"Engine\"[style=filled, label=\"Has one\", fontcolor=darkblue, arrowtail=odiamond]")
         end
       end
     end

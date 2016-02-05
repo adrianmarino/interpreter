@@ -9,11 +9,9 @@ module Vehicle
   end
 end
 
-class Door
-end
-
-class Key
-end
+class Door end
+class Key end
+class Engine end
 
 class Wheel
   attr_reader :inches
