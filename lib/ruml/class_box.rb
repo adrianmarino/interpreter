@@ -8,7 +8,7 @@ module Ruml
     end
 
     def build_association
-      append_association_with(@super_name) if @super_name
+      append_association_with(@super_name, :filled) if @super_name
       super
     end
   end

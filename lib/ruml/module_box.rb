@@ -34,14 +34,12 @@ module Ruml
     protected
 
     def build_association
-      append_inclusion(:includes, :dotted)
-      append_inclusion(:extends, :filled)
+      append_inclusion(:includes, :dotted, 'include')
+      append_inclusion(:extends, :dotted, 'extend')
     end
 
-    def append_association_with(member, style = :bold, label = '', fontcolor = '')
-      options = "label=#{label}" unless label.empty?
-      options += "fontcolor=#{fontcolor}" unless fontcolor.empty?
-
+    def append_association_with(member, style, label = '', fontcolor = 'darkblue')
+      options = ", label=#{label}, fontcolor=#{fontcolor}" unless label.empty?
       @content += "\s\s\"#{@name}\"->\"#{member}\"[style=#{style}#{options}]\n"
     end
 
@@ -75,8 +73,8 @@ module Ruml
       @content += "|" if @members[member_name].any?
     end
 
-    def append_inclusion(member_name, style)
-      @members[member_name].each { |member| append_association_with(member, style) }
+    def append_inclusion(member_name, style, label = '')
+      @members[member_name].each { |member| append_association_with(member, style,  label) }
     end
   end
 end

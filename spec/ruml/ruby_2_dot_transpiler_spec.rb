@@ -30,7 +30,7 @@ module Ruml
         end
       end
 
-      context "when compile empty class" do
+      context "when compile an empty class with a super class" do
         let(:input) { "class Card < Vehicle end" }
 
         it "returns an class box" do
@@ -38,7 +38,7 @@ module Ruml
         end
 
         it "return an inheritance association" do
-          expect(results).to include("\"Card\"->\"Vehicle\"[style=bold]")
+          expect(results).to include("\"Card\"->\"Vehicle\"[style=filled]")
         end
       end
 
@@ -70,7 +70,7 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Card\"->\"Engine\"[style=dotted]")
+          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=include, fontcolor=darkblue]")
         end
       end
 
@@ -88,7 +88,7 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Card\"->\"Engine\"[style=filled]")
+          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=extend, fontcolor=darkblue]")
         end
       end
 
