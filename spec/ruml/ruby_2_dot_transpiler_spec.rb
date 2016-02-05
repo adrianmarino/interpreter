@@ -16,7 +16,7 @@ module Ruml
               size="5,5"
               node[shape=record,style=filled,fillcolor=gray95]
               edge[dir=back, arrowtail=empty]
-              
+
             }
           DOT
         end

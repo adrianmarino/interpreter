@@ -42,7 +42,7 @@ module Ruml
       options = "label=#{label}" unless label.empty?
       options += "fontcolor=#{fontcolor}" unless fontcolor.empty?
 
-      @content += "\"#{@name}\"->\"#{member}\"[style=#{style}#{options}]\n"
+      @content += "\s\s\"#{@name}\"->\"#{member}\"[style=#{style}#{options}]\n"
     end
 
     private
@@ -57,7 +57,7 @@ module Ruml
     end
 
     def begin_box
-      @content = "\"#{@name}\"[label = \"{#{@name}"
+      @content = "\s\s\"#{@name}\"[label = \"{#{@name}"
     end
 
     def end_box

@@ -59,7 +59,7 @@ module Ruml
     end
 
     def visitKeyword_param(ctx)
-      "#{ctx.KEYWORD_PARAM_NAME.getText} #{visit(ctx.value)}"
+      "#{ctx.KEYWORD_PARAM_NAME.getText}#{ctx.value ? " #{visit(ctx.value)}" : ''}"
     end
 
     def visitDefault_param(ctx)
@@ -82,13 +82,13 @@ module Ruml
 
     def diagram(content)
       <<-DOT.strip_heredoc
-        digraph hierarchy {
-          size="5,5"
-          node[shape=record,style=filled,fillcolor=gray95]
-          edge[dir=back, arrowtail=empty]
-          #{content}
-        }
-      DOT
+digraph hierarchy {
+  size="5,5"
+  node[shape=record,style=filled,fillcolor=gray95]
+  edge[dir=back, arrowtail=empty]
+#{content}
+}
+DOT
     end
 
     def visit_and_join(nodes)

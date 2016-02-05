@@ -11,10 +11,6 @@ module Ruml
       def from_path(path)
         new(FileInputStream.new(path))
       end
-
-      def from(value)
-        new(ByteArrayInputStream.new(value.getBytes(StandardCharsets.UTF_8)))
-      end
     end
 
     def initialize(input_stream)
