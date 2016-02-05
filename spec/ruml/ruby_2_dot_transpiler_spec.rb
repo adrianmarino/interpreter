@@ -74,6 +74,24 @@ module Ruml
         end
       end
 
+      context "when compile class with self include" do
+        let(:input) do
+          <<-DOC
+            class Card
+              include self
+            end
+          DOC
+        end
+
+        it "returns an class box" do
+          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        end
+
+        it "return an include self association" do
+          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=include, fontcolor=darkblue]")
+        end
+      end
+
       context "when compile class that extend from module" do
         let(:input) do
           <<-DOC
@@ -89,6 +107,24 @@ module Ruml
 
         it "return an extend association" do
           expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
+        end
+      end
+
+      context "when compile class that extend from self" do
+        let(:input) do
+          <<-DOC
+            class Card
+              extend self
+            end
+          DOC
+        end
+
+        it "returns an class box" do
+          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        end
+
+        it "return an extend self association" do
+          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
         end
       end
 

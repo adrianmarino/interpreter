@@ -6,11 +6,13 @@ module Ruml
     end
 
     def include(name)
+      name = name == 'self' ? @name : name
       @members[:includes] << name
       self
     end
 
     def extend(name)
+      name = name == 'self' ? @name : name
       @members[:extends] << name
       self
     end
