@@ -10,7 +10,7 @@ module Ruml
     end
 
     def visitModule_def(ctx)
-      @builder = ModuleBox.new(visit(ctx.class_name))
+      @builder = ModuleBox.new(ctx.IDENTIFIER)
       visit(ctx.body)
       @builder.build
     end

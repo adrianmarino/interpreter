@@ -17,4 +17,9 @@ class Integer < Number
 end
 
 class Number
+  attr_accessor :c
+end
+
+module Enumerable
+  attr_accessor :c
 end

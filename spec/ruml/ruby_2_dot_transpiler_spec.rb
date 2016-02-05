@@ -59,7 +59,7 @@ module Ruml
       context "when compile class with a module included" do
         let(:input) do
           <<-DOC
-            class Card
+            module Card
               include Engine
             end
           DOC
@@ -77,7 +77,7 @@ module Ruml
       context "when compile class that extend from module" do
         let(:input) do
           <<-DOC
-            class Card
+            module Card
               extend Engine
             end
           DOC
