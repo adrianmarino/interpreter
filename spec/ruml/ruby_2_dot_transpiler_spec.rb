@@ -164,6 +164,21 @@ module Ruml
         end
       end
 
+      context "when compile a class with a class method with params" do
+        let(:input) do
+          <<-DOC
+            class Card
+              def self.add_wheel(wheel, number)
+              end
+            end
+          DOC
+        end
+
+        it "returns class box with a method with params" do
+          expect(results).to include("\"Card\"[label = \"{Card|.add_wheel(wheel, number)\\l}\"]")
+        end
+      end
+
       context "when compile a class with a instance method with params" do
         let(:input) do
           <<-DOC

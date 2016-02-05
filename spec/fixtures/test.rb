@@ -9,6 +9,9 @@ module Vehicle
   end
 end
 
+class Door
+end
+
 class Key
 end
 
@@ -24,6 +27,9 @@ class Car
   include Vehicle
 
   attr_reader :engine, :wheels, :bodyshop
+
+  def Car.basic
+  end
 
   def initialize(engine, wheels, bodyshop)
   end

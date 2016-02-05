@@ -42,6 +42,14 @@ module Ruml
       ctx.IDENTIFIER.getText
     end
 
+    def visitClass_method_def(ctx)
+      @member_builder.method(visit(ctx.class_method_name), visit(ctx.params), :class)
+    end
+
+    def visitClass_method_name(ctx)
+      ctx.IDENTIFIER.getText
+    end
+
     def visitInstance_method_def(ctx)
       @member_builder.method(visit(ctx.instance_method_name), visit(ctx.params))
     end
