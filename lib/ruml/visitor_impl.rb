@@ -6,7 +6,7 @@ module Ruml
   class VisitorImpl < RumlBaseVisitor
 
     def visitRuml(ctx)
-      diagram(ctx.class_def(0) ? visit(ctx.class_def(0)) : "")
+      diagram(visit_and_join(ctx.module_def) + visit_and_join(ctx.class_def))
     end
 
     def visitModule_def(ctx)
@@ -89,6 +89,10 @@ module Ruml
           #{content}
         }
       DOT
+    end
+
+    def visit_and_join(nodes)
+      nodes.map { |node| visit(node) }.join('')
     end
   end
 end
