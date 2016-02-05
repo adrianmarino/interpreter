@@ -3,8 +3,7 @@ digraph hierarchy {
   node[shape=record,style=filled,fillcolor=gray95]
   edge[dir=back, arrowtail=empty]
 
-
-  1[label = "{Abstract Class 1|+ attr_a\n+ attr_b|...}"]
+  1[label = "{Abstract Class 1|+ attr_a\l+ attr_b\l|...}"]
 
   2[label = "{Class 2|...| + method()\l...}"]
   1->2[style=bold]

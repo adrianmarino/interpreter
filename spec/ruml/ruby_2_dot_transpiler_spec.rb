@@ -52,7 +52,7 @@ module Ruml
         end
 
         it "returns class box with attrs" do
-          expect(results).to include("\"Card\"[label = \"{Card|wheels\\nengine\\nbodyshop\\n}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card|wheels\\lengine\\lbodyshop\\l}\"]")
         end
       end
 
@@ -175,7 +175,7 @@ module Ruml
         end
 
         it "returns class box with a method with params" do
-          expect(results).to include("\"Card\"[label = \"{Card|#add_wheel(wheel, number)\\n}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card|#add_wheel(wheel, number)\\l}\"]")
         end
       end
 
@@ -191,7 +191,7 @@ module Ruml
 
         it "returns class box with a method with default params" do
           expect(results).to include(
-            "\"Card\"[label = \"{Card|#add_wheel(wheel = 'normal', number = 4)\\n}\"]")
+            "\"Card\"[label = \"{Card|#add_wheel(wheel = 'normal', number = 4)\\l}\"]")
         end
       end
 
@@ -207,7 +207,7 @@ module Ruml
 
         it "returns class box with a method with keyword params" do
           expect(results).to include(
-            "\"Card\"[label = \"{Card|#add_wheel(wheel: 'normal', number: 4)\\n}\"]")
+            "\"Card\"[label = \"{Card|#add_wheel(wheel: 'normal', number: 4)\\l}\"]")
         end
       end
 
@@ -228,7 +228,7 @@ module Ruml
         end
 
         it "returns a car class box with an engine composition" do
-          expect(results).to include("\"Card\"[label = \"{Card|engine\\n}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card|engine\\l}\"]")
         end
 
         it "return a composition association" do

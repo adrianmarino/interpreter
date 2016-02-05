@@ -1,4 +1,12 @@
 module Vehicle
+  def acelerate(ratio = 10)
+  end
+
+  def brake(ratio = 10)
+  end
+
+  def turn(direction:, degree:10)
+  end
 end
 
 class Key
@@ -27,14 +35,5 @@ class Car
   end
 
   def fuelling(amount: 50.5)
-  end
-
-  def acelerate(ratio     =    10)
-  end
-
-  def brake(ratio=10)
-  end
-
-  def turn(direction:, degree:10)
   end
 end

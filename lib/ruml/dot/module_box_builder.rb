@@ -92,7 +92,7 @@ module Ruml
       def append(member_name)
         separator(member_name)
         @content = @members[member_name].inject(@content) do |content, member|
-          content + "#{block_given? ? yield(member) : member}\\n"
+          content + "#{block_given? ? yield(member) : member}\\l"
         end
       end
 
