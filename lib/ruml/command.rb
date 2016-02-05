@@ -22,7 +22,7 @@ module Command
   end
 
   def generate_parser(output_path = Path::GRAMMAR_SRC)
-    `cd #{Path::GRAMMAR}; antlr4 -no-listener -visitor #{GRAMMAR}.g4 -o ../../#{output_path}`
+    system("cd #{Path::GRAMMAR}; antlr4 -no-listener -visitor #{GRAMMAR}.g4 -o ../../#{output_path}")
     self
   end
 

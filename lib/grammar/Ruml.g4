@@ -48,7 +48,7 @@ ruml
 // Module
 //
 module_def
-  : 'module' module_name NEWLINE* body 'end'
+  : 'module' IDENTIFIER NEWLINE* body 'end'
   ;
 module_name
   : IDENTIFIER
@@ -69,13 +69,21 @@ super_class_name
 // Body
 //
 body
-  : ( (include_def | extend_def | attributes_def | class_method_def | instance_method_def ) NEWLINE+ )*
+  : (
+      ( include_def
+      | extend_def
+      | attributes_def
+      | class_method_def
+      | instance_method_def
+      )
+      NEWLINE+
+    )*
   ;
 include_def
-  : 'include' module_name
+  : 'include' IDENTIFIER
   ;
 extend_def
-  : 'extend' module_name
+  : 'extend' IDENTIFIER
   ;
 attributes_def
   : ('attr_reader' | 'attr_writer' | 'attr_accessor') SYMBOL (',' SYMBOL)*
@@ -87,7 +95,7 @@ class_method_def
   : 'def' class_method_name params NEWLINE+ 'end'
   ;
 class_method_name
-  : (class_name '.' | 'self.' )? IDENTIFIER
+  : (class_name '.' | 'self.' ) IDENTIFIER
   ;
 instance_method_def
   : 'def' instance_method_name params NEWLINE+ 'end'
@@ -99,31 +107,24 @@ instance_method_name
 // Method param
 //
 params
-  : param*
-  | ( '(' param (',' param )* ')' )*
+  : ( '(' param (',' param )* ')' )*
   ;
 param
-  : param_value
+  : normal_param
   | keyword_param
   | default_param
   ;
-param_value
+normal_param
   : IDENTIFIER
   ;
 keyword_param
-  : keyword_param_name value?
-  ;
-keyword_param_name
-  : KEYWORD_PARAM_NAME
+  : KEYWORD_PARAM_NAME value?
   ;
 default_param
-  : default_param_name '=' value
-  ;
-default_param_name
-  : IDENTIFIER
+  : IDENTIFIER '=' value
   ;
 value
-  : STRING
-  | SYMBOL
-  | NUMBER
+  : STRING  #stringValue
+  | SYMBOL  #symbolValue
+  | NUMBER  #numberValue
   ;

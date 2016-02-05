@@ -9,10 +9,29 @@ module Ruml
       diagram(ctx.class_def(0) ? visit(ctx.class_def(0)) : "")
     end
 
+    def visitModule_def(ctx)
+      @builder = ModuleBox.new(visit(ctx.class_name))
+      visit(ctx.body)
+      @builder.build
+    end
+
     def visitClass_def(ctx)
-      builder = ClassBox.new(visit(ctx.class_name))
-      builder.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
-      builder.build
+      @builder = ClassBox.new(visit(ctx.class_name))
+      @builder.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
+      visit(ctx.body)
+      @builder.build
+    end
+
+    def visitAttributes_def(ctx)
+      ctx.SYMBOL.each { |node| @builder.attribute(node.getText) }
+    end
+
+    def visitInclude_def(ctx)
+      @builder.include(ctx.IDENTIFIER.getText)
+    end
+
+    def visitExtend_def(ctx)
+      @builder.extend(ctx.IDENTIFIER.getText)
     end
 
     def visitClass_name(ctx)
@@ -23,46 +42,41 @@ module Ruml
       ctx.IDENTIFIER.getText
     end
 
-    # def visitBody(ctx)
-    # end
+    def visitInstance_method_def(ctx)
+      @builder.method(visit(ctx.instance_method_name), visit(ctx.params))
+    end
 
-    # def visitModule_def(ctx)
-    # end
-    # def visitModule_name(ctx)
-    # end
-    # def visitClass_def(ctx)
-    # end
+    def visitParams(ctx)
+      ctx.param.map { |node| visit(node) }
+    end
 
-    # def visitInclude_def(ctx)
-    # end
-    # def visitExtend_def(ctx)
-    # end
-    # def visitAttributes_def(ctx)
-    # end
-    # def visitClass_method_def(ctx)
-    # end
-    # def visitClass_method_name(ctx)
-    # end
-    # def visitInstance_method_def(ctx)
-    # end
-    # def visitInstance_method_name(ctx)
-    # end
-    # def visitParams(ctx)
-    # end
-    # def visitParam(ctx)
-    # end
-    # def visitParam_value(ctx)
-    # end
-    # def visitKeyword_param(ctx)
-    # end
-    # def visitKeyword_param_name(ctx)
-    # end
-    # def visitDefault_param(ctx)
-    # end
-    # def visitDefault_param_name(ctx)
-    # end
-    # def visitValue(ctx)
-    # end
+    def visitInstance_method_name(ctx)
+      ctx.IDENTIFIER.getText
+    end
+
+    def visitNormal_param(ctx)
+      ctx.IDENTIFIER.getText
+    end
+
+    def visitKeyword_param(ctx)
+      "#{ctx.KEYWORD_PARAM_NAME.getText} #{visit(ctx.value)}"
+    end
+
+    def visitDefault_param(ctx)
+      "#{ctx.IDENTIFIER.getText} = #{visit(ctx.value)}"
+    end
+
+    def visitStringValue(ctx)
+      ctx.STRING.getText
+    end
+
+    def visitSymbolValue(ctx)
+      ctx.SYMBOL.getText
+    end
+
+    def visitNumberValue(ctx)
+      ctx.NUMBER.getText
+    end
 
     private
 
