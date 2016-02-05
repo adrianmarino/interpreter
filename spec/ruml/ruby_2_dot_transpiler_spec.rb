@@ -59,6 +59,42 @@ module Ruml
       context "when compile class with a module included" do
         let(:input) do
           <<-DOC
+            class Card
+              include Engine
+            end
+          DOC
+        end
+
+        it "returns an class box" do
+          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        end
+
+        it "return an include association" do
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=include, fontcolor=darkblue]")
+        end
+      end
+
+      context "when compile class that extend from module" do
+        let(:input) do
+          <<-DOC
+            class Card
+              extend Engine
+            end
+          DOC
+        end
+
+        it "returns an class box" do
+          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        end
+
+        it "return an extend association" do
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
+        end
+      end
+
+      context "when compile module with a module included" do
+        let(:input) do
+          <<-DOC
             module Card
               include Engine
             end
@@ -74,7 +110,7 @@ module Ruml
         end
       end
 
-      context "when compile class that extend from module" do
+      context "when compile module that extend from module" do
         let(:input) do
           <<-DOC
             module Card
@@ -106,7 +142,6 @@ module Ruml
           expect(results).to include("\"Card\"[label = \"{Card|#add_wheel(wheel, number)\\n}\"]")
         end
       end
-
 
       context "when compile class with a instance method with default params" do
         let(:input) do
