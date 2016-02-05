@@ -38,9 +38,18 @@ module Ruml
       append_inclusion(:extends, :dotted, 'extend')
     end
 
-    def append_association_with(member, style, label = '', fontcolor = 'darkblue')
-      options = ", label=#{label}, fontcolor=#{fontcolor}" unless label.empty?
-      @content += "\s\s\"#{@name}\"->\"#{member}\"[style=#{style}#{options}]\n"
+    def append_association_with(member, style, label = '', direction = :out)
+      options = ", label=#{label}, fontcolor=darkblue" unless label.empty?
+
+      if direction == :out
+        origin = member
+        destiny = @name
+      else
+        origin = @name
+        destiny = member
+      end
+
+      @content += "\s\s\"#{origin}\"->\"#{destiny}\"[style=#{style}#{options}]\n"
     end
 
     private
@@ -55,7 +64,7 @@ module Ruml
     end
 
     def begin_box
-      @content = "\s\s\"#{@name}\"[label = \"{#{@name}"
+      @content = "\s\s\"#{@name}\"[label = \"{\[#{@name}\]"
     end
 
     def end_box

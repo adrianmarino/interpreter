@@ -38,7 +38,7 @@ module Ruml
         end
 
         it "return an inheritance association" do
-          expect(results).to include("\"Card\"->\"Vehicle\"[style=filled]")
+          expect(results).to include("\"Vehicle\"->\"Card\"[style=filled, label=is, fontcolor=darkblue]")
         end
       end
 
@@ -66,11 +66,11 @@ module Ruml
         end
 
         it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+          expect(results).to include("\"Card\"[label = \"{[Card]}\"]")
         end
 
         it "return an include association" do
-          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=include, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=include, fontcolor=darkblue]")
         end
       end
 
@@ -84,11 +84,11 @@ module Ruml
         end
 
         it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+          expect(results).to include("\"Card\"[label = \"{[Card]}\"]")
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=extend, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=extend, fontcolor=darkblue]")
         end
       end
 
