@@ -1,3 +1,4 @@
+# Vehicle Class
 class Vehicle
   def acelerate(ratio = 10)
   end
@@ -9,6 +10,9 @@ class Vehicle
   end
 end
 
+=begin
+ Car Class
+=end
 class Car < Vehicle
   attr_reader :engine, :wheels, :bodyshop
   attr_accessor :model, :factory
