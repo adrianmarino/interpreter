@@ -21,7 +21,7 @@ module Ruml::Dot
     private
 
     def diagram(content)
-      <<-DOT.strip_heredoc
+      <<-DOT
 digraph hierarchy {
   size="5,5"
   node[shape=record,style=filled,fillcolor=gray95]
