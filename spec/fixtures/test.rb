@@ -1,4 +1,4 @@
-module Vehicle
+class Vehicle
   def acelerate(ratio = 10)
   end
 
@@ -9,24 +9,14 @@ module Vehicle
   end
 end
 
-class Door end
-class Key end
-class Engine end
-
-class Wheel
-  attr_reader :inches
-end
-
-class Bodyshop
-  attr_reader :doors
-end
-
-class Car
-  include Vehicle
-
+class Car < Vehicle
   attr_reader :engine, :wheels, :bodyshop
+  attr_accessor :model, :factory
 
   def Car.basic
+  end
+
+  def Car.sport
   end
 
   def initialize(engine, wheels, bodyshop)
@@ -40,4 +30,30 @@ class Car
 
   def fuelling(amount: 50.5)
   end
+end
+
+class Door
+  def open
+  end
+  def close
+  end
+end
+
+class Key end
+
+class Engine
+  attr_accessor :oil_level
+end
+
+class Wheel
+  attr_reader :inches
+  attr_writer :air
+
+  def Wheel.basic
+  end
+end
+
+class Bodyshop
+  attr_accessor :doors, :width
+  attr_accessor :height, :lenght
 end

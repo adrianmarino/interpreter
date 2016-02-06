@@ -46,13 +46,15 @@ module Ruml
         let(:input) do
           <<-DOC
             class Card
-              attr_reader :wheels, :engine, :bodyshop
+              attr_reader :wheels
+              attr_accessor :fuel
+              attr_writer :oil
             end
           DOC
         end
 
         it "returns class box with attrs" do
-          expect(results).to include("\"Card\"[label = \"{Card|wheels\\lengine\\lbodyshop\\l}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card|(r) wheels\\l(rw) fuel\\l(w) oil\\l}\"]")
         end
       end
 
@@ -243,7 +245,7 @@ module Ruml
         end
 
         it "returns a car class box with an engine composition" do
-          expect(results).to include("\"Card\"[label = \"{Card|engine\\l}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card|(r) engine\\l}\"]")
         end
 
         it "return a composition association" do

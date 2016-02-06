@@ -22,8 +22,16 @@ module Ruml
       visit(ctx.body)
     end
 
-    def visitAttributes_def(ctx)
-      ctx.SYMBOL.each { |node| @member_builder.attribute(node.getText) }
+    def visitAttr_reader(ctx)
+      ctx.SYMBOL.each { |node| @member_builder.attribute(node.getText, :r) }
+    end
+
+    def visitAttr_writter(ctx)
+      ctx.SYMBOL.each { |node| @member_builder.attribute(node.getText, :w) }
+    end
+
+    def visitAttr_accessor(ctx)
+      ctx.SYMBOL.each { |node| @member_builder.attribute(node.getText, :rw) }
     end
 
     def visitInclude_def(ctx)

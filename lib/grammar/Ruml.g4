@@ -86,7 +86,9 @@ extend_def
   : 'extend' IDENTIFIER
   ;
 attributes_def
-  : ('attr_reader' | 'attr_writer' | 'attr_accessor') SYMBOL (',' SYMBOL)*
+  : 'attr_reader'   SYMBOL (',' SYMBOL)*  #attr_reader
+  | 'attr_writer'   SYMBOL (',' SYMBOL)*  #attr_writter
+  | 'attr_accessor' SYMBOL (',' SYMBOL)*  #attr_accessor
   ;
 //
 // Method

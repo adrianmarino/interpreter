@@ -23,8 +23,8 @@ module Ruml
         self
       end
 
-      def attribute(attribute)
-        @members[:attributes] << attribute.gsub(':', '')
+      def attribute(attribute, type)
+        @members[:attributes] << [attribute.gsub(':', ''), type]
         self
       end
 
@@ -52,7 +52,7 @@ module Ruml
       def add_compositions(objects)
         names = objects.map { |obj| obj.name.downcase }
 
-        associations = @members[:attributes].map do |attr|
+        associations = @members[:attributes].map do |(attr, _type)|
           [attr.singularize.capitalize, attr.singular? ? :one : :many] if names.include?(attr.singularize)
         end.compact
 
@@ -79,13 +79,8 @@ module Ruml
 
       def build_box
         begin_box
-        append(:attributes)
-        append(:methods) do |(name, params, type)|
-          signature = type == :class ? '.' : '#'
-          signature += name
-          signature += "(#{params.join(', ')})" if params.any?
-          signature
-        end
+        append_attributes
+        append_methods
         end_box
       end
 
@@ -97,11 +92,21 @@ module Ruml
         @content += "}\"]\n"
       end
 
-      def append(member_name)
-        separator(member_name)
-        @content = @members[member_name].inject(@content) do |content, member|
-          content + "#{block_given? ? yield(member) : member}\\l"
+      def append_attributes
+        separator(:attributes)
+        @content = @members[:attributes].inject(@content) do |content, (member, type)|
+          content + "(#{type.to_s}) #{member}\\l"
         end
+      end
+
+      def append_methods
+        separator(:methods)
+        @content = @members[:methods].inject(@content) do |content, (name, params, type)|
+         signature = type == :class ? '.' : '#'
+         signature += name
+         signature += "(#{params.join(', ')})" if params.any?
+         content + "#{signature}\\l"
+       end
       end
 
       def separator(member_name)
