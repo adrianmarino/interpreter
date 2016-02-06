@@ -35,21 +35,33 @@ end
 class Door
   def open
   end
+
   def close
   end
 end
 
 class Key end
 
+module ElectronicInjection
+  attr_accessor :injectors
+end
+
 class Engine
+  include ElectronicInjection
   attr_accessor :oil_level
 end
 
-class Wheel
-  attr_reader :inches
-  attr_writer :air
+class Tire
+  attr_reader :air, :inches
+  def initialize(air, inches)
+  end
+end
 
+class Wheel
+  attr_reader :tire
   def Wheel.basic
+  end
+  def Wheel.sport
   end
 end
 

@@ -140,7 +140,7 @@ module Ruml
         end
 
         it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{[Card]}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card (Mod)}\"]")
         end
 
         it "return an include association" do
@@ -158,7 +158,7 @@ module Ruml
         end
 
         it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{[Card]}\"]")
+          expect(results).to include("\"Card\"[label = \"{Card (Mod)}\"]")
         end
 
         it "return an extend association" do

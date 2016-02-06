@@ -85,7 +85,7 @@ module Ruml
       end
 
       def begin_box
-        @content = "\s\s\"#{@name}\"[label = \"{\[#{@name}\]"
+        @content = "\s\s\"#{@name}\"[label = \"{#{@name} (Mod)"
       end
 
       def end_box
