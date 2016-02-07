@@ -38,7 +38,7 @@ module Ruml
         end
 
         it "return an inheritance association" do
-          expect(results).to include("\"Vehicle\"->\"Card\"[style=filled, label=Is, fontcolor=darkblue]")
+          expect(results).to include("\"Vehicle\"->\"Card\"[style=filled, label=Is]")
         end
       end
 
@@ -72,7 +72,7 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include]")
         end
       end
 
@@ -90,7 +90,7 @@ module Ruml
         end
 
         it "return an include self association" do
-          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=Include, fontcolor=darkblue]")
+          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=Include]")
         end
       end
 
@@ -108,7 +108,7 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend]")
         end
       end
 
@@ -126,7 +126,7 @@ module Ruml
         end
 
         it "return an extend self association" do
-          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=Extend, fontcolor=darkblue]")
+          expect(results).to include("\"Card\"->\"Card\"[style=dotted, label=Extend]")
         end
       end
 
@@ -144,7 +144,7 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include]")
         end
       end
 
@@ -162,7 +162,7 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend, fontcolor=darkblue]")
+          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend]")
         end
       end
 
@@ -250,7 +250,7 @@ module Ruml
 
         it "return a composition association" do
           expect(results).to include(
-            "\"Card\"->\"Engine\"[style=filled, label=\"Has one\", fontcolor=darkblue, arrowtail=odiamond]")
+            "\"Card\"->\"Engine\"[style=filled, label=\"Has one\", arrowtail=odiamond]")
         end
       end
     end

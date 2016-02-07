@@ -106,7 +106,7 @@ instance_method_name
   : IDENTIFIER
   ;
 //
-// Method param
+// Method params
 //
 params
   : ( '(' param (',' param )* ')' )*

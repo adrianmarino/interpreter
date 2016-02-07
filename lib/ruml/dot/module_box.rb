@@ -55,7 +55,7 @@ module Ruml::Dot
 
     def append_association_with(member, style, label = '', direction = :out, arrowtail = '' )
       options = ["style=#{style}"]
-      options << ["label=#{label}", "fontcolor=darkblue"] unless label.empty?
+      options << "label=#{label}" unless label.empty?
       options << "arrowtail=#{arrowtail}" unless arrowtail.empty?
 
       if direction == :out
