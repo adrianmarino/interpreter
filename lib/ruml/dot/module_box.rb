@@ -1,4 +1,5 @@
 require 'active_support/inflector'
+require 'ruml/dot/association'
 
 module Ruml::Dot
   class ModuleBox
@@ -9,7 +10,7 @@ module Ruml::Dot
       @name = name
     end
 
-    def module(module_name, action)
+    def module(action, module_name)
       module_name = module_name == 'self' ? @name : module_name
       @members[action] << module_name
       self
@@ -33,6 +34,14 @@ module Ruml::Dot
 
     protected
 
+    def assoc
+      Ruml::Dot::Association
+    end
+
+    def append_assoc(assoc)
+      @content += "\s\s#{assoc}\n"
+    end
+
     def build_associations(objects)
       append_inclusion(:include)
       append_inclusion(:extend)
@@ -42,31 +51,12 @@ module Ruml::Dot
     private
 
     def append_compositions(objects)
-      names = objects.map { |obj| obj.name.downcase }
-
-      associations = @members[:attributes].map do |(attr, _type)|
-        [attr.singularize.capitalize, attr.singular? ? :one : :many] if names.include?(attr.singularize)
-      end.compact
-
-      associations.each do |name, type|
-        append_association_with(name.capitalize, :filled, "\"Has #{type}\"", :in, :odiamond)
+      objects.each do |object|
+        associations = @members[:attributes].map do |attr, _type|
+          [ attr.singular? ? :one : :many, object.name ] if attr.singularize == object.name.downcase
+        end.compact
+        associations.each { |type, object_name| append_assoc(assoc.composition(@name, type, object_name)) }
       end
-    end
-
-    def append_association_with(member, style, label = '', direction = :out, arrowtail = '' )
-      options = ["style=#{style}"]
-      options << "label=#{label}" unless label.empty?
-      options << "arrowtail=#{arrowtail}" unless arrowtail.empty?
-
-      if direction == :out
-        origin = member
-        destiny = name
-      else
-        origin = name
-        destiny = member
-      end
-
-      @content += "\s\s\"#{origin}\"->\"#{destiny}\"[#{options.join(', ')}]\n"
     end
 
     def build_box
@@ -101,14 +91,12 @@ module Ruml::Dot
      end
     end
 
-    def separator(member_name)
-      @content += "|" if @members[member_name].any?
+    def separator(member)
+      @content += "|" if @members[member].any?
     end
 
-    def append_inclusion(member_name, style = :dotted)
-      @members[member_name].each do |member|
-        append_association_with(member, style, member_name.to_s.singularize.capitalize)
-      end
+    def append_inclusion(member)
+      @members[member].each { |module_name| append_assoc(assoc.inclusion(member, @name, module_name)) }
     end
   end
 end

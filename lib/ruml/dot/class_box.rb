@@ -1,4 +1,5 @@
 require 'ruml/dot/module_box'
+require 'ruml/dot/association'
 
 module Ruml::Dot
   class ClassBox < ModuleBox
@@ -8,7 +9,7 @@ module Ruml::Dot
     end
 
     def build_associations(objects)
-      append_association_with(@super_name, :filled, 'Is') if @super_name
+      append_assoc(assoc.inheritance(@name,@super_name)) if @super_name
       super(objects)
     end
 

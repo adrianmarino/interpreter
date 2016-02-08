@@ -8,7 +8,7 @@ module Ruml::Dot
     end
 
     def box(member, name)
-      member = "Ruml::Dot::#{member.to_s.capitalize}Box".constantize.new(name)
+      member = box_class_of(member).new(name)
       @members << member
       member
     end
@@ -19,6 +19,10 @@ module Ruml::Dot
     end
 
     private
+
+    def box_class_of(member)
+      "Ruml::Dot::#{member.to_s.capitalize}Box".constantize
+    end
 
     def diagram(content)
       <<-DOT

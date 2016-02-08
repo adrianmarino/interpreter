@@ -31,11 +31,11 @@ module Ruml
     end
 
     def visitInclude_def(ctx)
-      @member.module(ctx.IDENTIFIER.getText, :include)
+      @member.module(:include, ctx.IDENTIFIER.getText)
     end
 
     def visitExtend_def(ctx)
-      @member.module(ctx.IDENTIFIER.getText, :extend)
+      @member.module(:extend, ctx.IDENTIFIER.getText)
     end
 
     def visitAttr_reader(ctx)
