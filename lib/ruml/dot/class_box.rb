@@ -3,8 +3,8 @@ require 'ruml/dot/association'
 
 module Ruml::Dot
   class ClassBox < ModuleBox
-    def super_class(name)
-      @super_name = name
+    def super_class(value)
+      @super_name = value
       self
     end
 

@@ -3,12 +3,15 @@ require 'ruml/dot/module_box'
 
 module Ruml::Dot
   class Diagram
+
+    INDENTATION = "\s\s"
+
     def initialize
       @members = []
     end
 
     def box(member, name)
-      member = box_class_of(member).new(name)
+      member = box_class_of(member).new(name, INDENTATION)
       @members << member
       member
     end

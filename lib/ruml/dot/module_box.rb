@@ -5,9 +5,10 @@ module Ruml::Dot
   class ModuleBox
     attr_reader :name
 
-    def initialize(name)
-      @members = Hash.new { |hash, key| hash[key] = [] }
-      @name = name
+    def initialize(name, indentation)
+      @members      = Hash.new { |hash, key| hash[key] = [] }
+      @name         = name
+      @indentation  = indentation
     end
 
     def module(action, module_name)
@@ -39,12 +40,12 @@ module Ruml::Dot
     end
 
     def append_assoc(assoc)
-      @content += "\s\s#{assoc}\n"
+      @content += "#{@indentation}#{assoc}\n"
     end
 
     def build_associations(objects)
-      append_inclusion(:include)
-      append_inclusion(:extend)
+      append_inclusions(:include)
+      append_inclusions(:extend)
       append_compositions(objects)
     end
 
@@ -67,7 +68,7 @@ module Ruml::Dot
     end
 
     def begin_box
-      @content = "\s\s\"#{@name}\"[label = \"{#{@name} (Mod)"
+      @content = "#{@indentation}\"#{@name}\"[label = \"{#{@name} (Mod)"
     end
 
     def end_box
@@ -75,14 +76,14 @@ module Ruml::Dot
     end
 
     def append_attributes
-      separator(:attributes)
+      append_separator(:attributes)
       @content = @members[:attributes].inject(@content) do |content, (member, type)|
         content + "(#{type.to_s}) #{member}\\l"
       end
     end
 
     def append_methods
-      separator(:methods)
+      append_separator(:methods)
       @content = @members[:methods].inject(@content) do |content, (name, params, type)|
        signature = type == :class ? '.' : '#'
        signature += name
@@ -91,11 +92,11 @@ module Ruml::Dot
      end
     end
 
-    def separator(member)
+    def append_separator(member)
       @content += "|" if @members[member].any?
     end
 
-    def append_inclusion(member)
+    def append_inclusions(member)
       @members[member].each { |module_name| append_assoc(assoc.inclusion(member, @name, module_name)) }
     end
   end
