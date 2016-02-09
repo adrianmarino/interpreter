@@ -3,6 +3,14 @@ require 'spec_helper'
 module Ruml
   describe Ruby2DotTranspiler do
     describe "#compile" do
+      let(:class_options) do
+        "shape=\"record\" style=\"rounded, filled\" fillcolor=\"#FFECDD\""
+      end
+
+      let(:module_options) do
+        "shape=\"record\" style=\"filled\" fillcolor=\"#B3F6B3\""
+      end
+
       let(:results) { subject.compile }
 
       subject { described_class.new(input) }
@@ -12,12 +20,10 @@ module Ruml
 
         it "returns a dot empty diagram" do
           expect(results).to eq(<<-DOT.strip_heredoc)
-            digraph hierarchy {
-              size="5,5"
-              node[shape=record,style=filled,fillcolor=gray95]
-              edge[dir=back, arrowtail=empty]
+          digraph g {
+            graph[fontsize="30" labelloc="t" label="Models Diagram" splines="true" overlap="true"]
 
-            }
+          }
           DOT
         end
       end
@@ -25,16 +31,16 @@ module Ruml
       context "when compile an empty class" do
         let(:input) { "class Card end" }
 
-        it "returns empty class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        it "returns empty class shape" do
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{class_options}]")
         end
       end
 
       context "when compile an empty class with a super class" do
         let(:input) { "class Card < Vehicle end" }
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        it "returns a class shape" do
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{class_options}]")
         end
 
         it "return an inheritance association" do
@@ -53,8 +59,9 @@ module Ruml
           DOC
         end
 
-        it "returns class box with attrs" do
-          expect(results).to include("\"Card\"[label = \"{Card|(r) wheels\\l(rw) fuel\\l(w) oil\\l}\"]")
+        it "returns class shape with attrs" do
+          expect(results).to include(
+            "\"Card\"[label=\"{Card|(r) wheels\\l(rw) fuel\\l(w) oil\\l}\" #{class_options}]")
         end
       end
 
@@ -67,8 +74,8 @@ module Ruml
           DOC
         end
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        it "returns a class shape" do
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{class_options}]")
         end
 
         it "return an include association" do
@@ -85,8 +92,8 @@ module Ruml
           DOC
         end
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        it "returns a class shape" do
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{class_options}]")
         end
 
         it "return an include self association" do
@@ -103,8 +110,8 @@ module Ruml
           DOC
         end
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        it "returns a class shape" do
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{class_options}]")
         end
 
         it "return an extend association" do
@@ -121,8 +128,8 @@ module Ruml
           DOC
         end
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card}\"]")
+        it "returns a class shape" do
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{class_options}]")
         end
 
         it "return an extend self association" do
@@ -139,8 +146,8 @@ module Ruml
           DOC
         end
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card (Mod)}\"]")
+        it "returns a module shape" do
+          expect(results).to include("\"Card\"[label=\"{Card (Mod)}\" #{module_options}]")
         end
 
         it "return an include association" do
@@ -157,8 +164,8 @@ module Ruml
           DOC
         end
 
-        it "returns an class box" do
-          expect(results).to include("\"Card\"[label = \"{Card (Mod)}\"]")
+        it "returns a module shape" do
+          expect(results).to include("\"Card\"[label=\"{Card (Mod)}\" #{module_options}]")
         end
 
         it "return an extend association" do
@@ -176,8 +183,9 @@ module Ruml
           DOC
         end
 
-        it "returns class box with a method with params" do
-          expect(results).to include("\"Card\"[label = \"{Card|.add_wheel(wheel, number)\\l}\"]")
+        it "returns class shape with a method with params" do
+          expect(results).to include(
+            "\"Card\"[label=\"{Card|.add_wheel(wheel, number)\\l}\" #{class_options}]")
         end
       end
 
@@ -191,8 +199,9 @@ module Ruml
           DOC
         end
 
-        it "returns class box with a method with params" do
-          expect(results).to include("\"Card\"[label = \"{Card|#add_wheel(wheel, number)\\l}\"]")
+        it "returns class shape with a method with params" do
+          expect(results).to include(
+            "\"Card\"[label=\"{Card|#add_wheel(wheel, number)\\l}\" #{class_options}]")
         end
       end
 
@@ -206,9 +215,9 @@ module Ruml
           DOC
         end
 
-        it "returns class box with a method with default params" do
+        it "returns class shape with a method with default params" do
           expect(results).to include(
-            "\"Card\"[label = \"{Card|#add_wheel(wheel = 'normal', number = 4)\\l}\"]")
+            "\"Card\"[label=\"{Card|#add_wheel(wheel = 'normal', number = 4)\\l}\" #{class_options}]")
         end
       end
 
@@ -222,9 +231,9 @@ module Ruml
           DOC
         end
 
-        it "returns class box with a method with keyword params" do
+        it "returns class shape with a method with keyword params" do
           expect(results).to include(
-            "\"Card\"[label = \"{Card|#add_wheel(wheel: 'normal', number: 4)\\l}\"]")
+            "\"Card\"[label=\"{Card|#add_wheel(wheel: 'normal', number: 4)\\l}\" #{class_options}]")
         end
       end
 
@@ -240,12 +249,12 @@ module Ruml
           DOC
         end
 
-        it "returns an engine class box" do
-          expect(results).to include("\"Engine\"[label = \"{Engine}\"]")
+        it "returns an engine class shape" do
+          expect(results).to include("\"Engine\"[label=\"{Engine}\" #{class_options}]")
         end
 
-        it "returns a car class box with an engine composition" do
-          expect(results).to include("\"Card\"[label = \"{Card|(r) engine\\l}\"]")
+        it "returns a car class shape with an engine composition" do
+          expect(results).to include("\"Card\"[label=\"{Card|(r) engine\\l}\" #{class_options}]")
         end
 
         it "return a composition association" do

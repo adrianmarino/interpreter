@@ -1,14 +1,18 @@
 require 'active_support/inflector'
 require 'ruml/dot/association'
+require 'ruml/dot/shape'
 
 module Ruml::Dot
-  class ModuleBox
+  class ModuleShape
+    include Ruml::Dot::Shape
+
     attr_reader :name
 
-    def initialize(name, indentation)
+    def initialize(name, options)
       @members      = Hash.new { |hash, key| hash[key] = [] }
       @name         = name
-      @indentation  = indentation
+      @indentation  = options[:indentation]
+      @options      = options[type_from]
     end
 
     def module(action, module_name)
@@ -68,11 +72,11 @@ module Ruml::Dot
     end
 
     def begin_box
-      @content = "#{@indentation}\"#{@name}\"[label = \"{#{@name} (Mod)"
+      @content = "#{@indentation}\"#{@name}\"[label=\"{#{@name} (Mod)"
     end
 
     def end_box
-      @content += "}\"]\n"
+      @content += "}\" #{to_options(@options)}]\n"
     end
 
     def append_attributes

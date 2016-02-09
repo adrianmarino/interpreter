@@ -1,6 +1,5 @@
 module Ruml::Dot
   class Association
-
     class << self
       def inheritance(class_name, super_class_name)
         new.origin(super_class_name).destiny(class_name).label('Is').style(:filled).build

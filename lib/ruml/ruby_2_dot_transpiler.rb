@@ -21,8 +21,10 @@ module Ruml
       @parser       = RumlParser.new(token_stream)
     end
 
-    def compile
-      VisitorImpl.new.visit(@parser.ruml)
+    def compile(options = Ruml::Dot::Options.default)
+      diagram = Ruml::Dot::Diagram.new(options)
+      visitor = VisitorImpl.new
+      visitor.visit(@parser.ruml)
     end
   end
 end

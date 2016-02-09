@@ -4,20 +4,19 @@ require 'ruml/dot/diagram'
 
 module Ruml
   class VisitorImpl < RumlBaseVisitor
-
     def visitRuml(ctx)
-      @diagram = Dot::Diagram.new
+      @diagram = Ruml::Dot::Diagram.new
       visitChildren(ctx)
       @diagram.build
     end
 
     def visitModule_def(ctx)
-      @member = @diagram.box(:module, ctx.IDENTIFIER.getText)
+      @member = @diagram.add_shape(:module, ctx.IDENTIFIER.getText)
       visit(ctx.body)
     end
 
     def visitClass_def(ctx)
-      @member = @diagram.box(:class, visit(ctx.class_name))
+      @member = @diagram.add_shape(:class, visit(ctx.class_name))
       @member.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
       visit(ctx.body)
     end

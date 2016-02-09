@@ -1,41 +1,38 @@
-require 'ruml/dot/class_box'
-require 'ruml/dot/module_box'
+require 'ruml/dot/options'
+require 'ruml/dot/helper'
+require 'ruml/dot/shape'
+require 'ruml/extensions'
 
 module Ruml::Dot
   class Diagram
+    include Ruml::Dot::Helper
 
-    INDENTATION = "\s\s"
-
-    def initialize
-      @members = []
+    def initialize(options = Ruml::Dot::Options.default)
+      @shapes = []
+      @options = options
     end
 
-    def box(member, name)
-      member = box_class_of(member).new(name, INDENTATION)
-      @members << member
-      member
+    def add_shape(type, name)
+      shape = Ruml::Dot::Shape.class_from(type).new(name, @options)
+      @shapes << shape
+      shape
     end
 
     def build
-      body= @members.map { |member| member.build(@members) }.join
+      body = @shapes.map { |shape| shape.build(@shapes) }.join
       diagram(body)
     end
 
     private
 
-    def box_class_of(member)
-      "Ruml::Dot::#{member.to_s.capitalize}Box".constantize
-    end
-
     def diagram(content)
+      dot_options = to_options(@options[:diagram])
       <<-DOT
-digraph hierarchy {
-  size="5,5"
-  node[shape=record,style=filled,fillcolor=gray95]
-  edge[dir=back, arrowtail=empty]
+digraph g {
+  graph[#{dot_options}]
 #{content}
 }
-      DOT
+DOT
     end
   end
 end
