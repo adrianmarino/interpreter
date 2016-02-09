@@ -9,7 +9,7 @@ module Ruml::Dot
     end
 
     def build_associations(objects)
-      append_assoc(assoc.inheritance(@name, @super_name)) if @super_name
+      append_assoc(Association.inheritance(@name, @super_name)) if @super_name
       super(objects)
     end
 

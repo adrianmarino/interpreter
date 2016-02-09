@@ -22,8 +22,8 @@ module Ruml
     end
 
     def compile(options = Ruml::Dot::Options.default)
-      diagram = Ruml::Dot::Diagram.new(options)
-      visitor = VisitorImpl.new
+      diagram = Ruml::Dot::ModelDiagram.new(options)
+      visitor = VisitorImpl.with(diagram)
       visitor.visit(@parser.ruml)
     end
   end

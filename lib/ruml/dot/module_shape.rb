@@ -4,7 +4,7 @@ require 'ruml/dot/shape'
 
 module Ruml::Dot
   class ModuleShape
-    include Ruml::Dot::Shape
+    include Shape
 
     attr_reader :name
 
@@ -39,10 +39,6 @@ module Ruml::Dot
 
     protected
 
-    def assoc
-      Ruml::Dot::Association
-    end
-
     def append_assoc(assoc)
       @content += "#{@indentation}#{assoc}\n"
     end
@@ -60,7 +56,9 @@ module Ruml::Dot
         associations = @members[:attributes].map do |attr, _type|
           [ attr.singular? ? :one : :many, object.name ] if attr.singularize == object.name.downcase
         end.compact
-        associations.each { |type, object_name| append_assoc(assoc.composition(@name, type, object_name)) }
+        associations.each do |type, object_name|
+          append_assoc(Association.composition(@name, type, object_name))
+        end
       end
     end
 
@@ -101,7 +99,7 @@ module Ruml::Dot
     end
 
     def append_inclusions(member)
-      @members[member].each { |module_name| append_assoc(assoc.inclusion(member, @name, module_name)) }
+      @members[member].each { |module_name| append_assoc(Association.inclusion(member, @name, module_name)) }
     end
   end
 end

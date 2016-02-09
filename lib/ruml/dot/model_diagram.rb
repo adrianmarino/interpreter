@@ -4,16 +4,16 @@ require 'ruml/dot/shape'
 require 'ruml/extensions'
 
 module Ruml::Dot
-  class Diagram
-    include Ruml::Dot::Helper
+  class ModelDiagram
+    include Helper
 
-    def initialize(options = Ruml::Dot::Options.default)
+    def initialize(options = Options.default)
       @shapes = []
       @options = options
     end
 
     def add_shape(type, name)
-      shape = Ruml::Dot::Shape.class_from(type).new(name, @options)
+      shape = Shape.class_from(type).new(name, @options)
       @shapes << shape
       shape
     end

@@ -1,11 +1,22 @@
 import 'RumlBaseVisitor'
 import 'RumlLexer'
-require 'ruml/dot/diagram'
+require 'ruml/dot/model_diagram'
 
 module Ruml
   class VisitorImpl < RumlBaseVisitor
+    class << self
+      def with(diagram)
+        visitor = new
+        visitor.diagram(diagram)
+        visitor
+      end
+    end
+
+    def diagram(diagram)
+      @diagram = diagram
+    end
+
     def visitRuml(ctx)
-      @diagram = Ruml::Dot::Diagram.new
       visitChildren(ctx)
       @diagram.build
     end
