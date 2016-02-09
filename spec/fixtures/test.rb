@@ -1,17 +1,5 @@
-# Vehicle Class
-class Vehicle
-  def acelerate(ratio = 10)
-  end
-
-  def brake(ratio = 10)
-  end
-
-  def turn(direction:, degree:10)
-  end
-end
-
 =begin
- Car Class
+Car Class
 =end
 class Car < Vehicle
   attr_reader :engine, :wheels, :bodyshop
@@ -33,6 +21,18 @@ class Car < Vehicle
   end
 
   def fuelling(amount: 50.5)
+  end
+end
+
+# Vehicle Class
+class Vehicle
+  def acelerate(ratio = 10)
+  end
+
+  def brake(ratio = 10)
+  end
+
+  def turn(direction:, degree:10)
   end
 end
 

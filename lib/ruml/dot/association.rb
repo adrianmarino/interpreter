@@ -2,12 +2,12 @@ module Ruml::Dot
   class Association
     class << self
       def inheritance(class_name, super_class_name)
-        new.origin(super_class_name).destiny(class_name).label('Is').style(:filled).build
+        new.origin(class_name).destiny(super_class_name).label('Is').style(:filled).build
       end
 
       def inclusion(type, class_name, module_name)
         label = type.to_s.singularize.capitalize
-        new.origin(module_name).destiny(class_name).style(:dotted).label(label).build
+        new.origin(class_name).destiny(module_name).style(:dotted).label(label).build
       end
 
       def composition(class_name, type, children_name)
