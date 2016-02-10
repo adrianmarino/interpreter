@@ -1,37 +1,35 @@
 import 'RumlBaseVisitor'
 import 'RumlLexer'
-require 'ruml/class_box'
+require 'ruml/dot/model_diagram'
 
 module Ruml
   class VisitorImpl < RumlBaseVisitor
+    class << self
+      def with(diagram)
+        visitor = new
+        visitor.diagram(diagram)
+        visitor
+      end
+    end
+
+    def diagram(diagram)
+      @diagram = diagram
+    end
 
     def visitRuml(ctx)
-      diagram(visit_and_join(ctx.module_def) + visit_and_join(ctx.class_def))
+      visitChildren(ctx)
+      @diagram.build
     end
 
     def visitModule_def(ctx)
-      @builder = ModuleBox.new(ctx.IDENTIFIER)
+      @member = @diagram.add_shape(:module, ctx.IDENTIFIER.getText)
       visit(ctx.body)
-      @builder.build
     end
 
     def visitClass_def(ctx)
-      @builder = ClassBox.new(visit(ctx.class_name))
-      @builder.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
+      @member = @diagram.add_shape(:class, visit(ctx.class_name))
+      @member.super_class(visit(ctx.super_class_name)) if ctx.super_class_name
       visit(ctx.body)
-      @builder.build
-    end
-
-    def visitAttributes_def(ctx)
-      ctx.SYMBOL.each { |node| @builder.attribute(node.getText) }
-    end
-
-    def visitInclude_def(ctx)
-      @builder.include(ctx.IDENTIFIER.getText)
-    end
-
-    def visitExtend_def(ctx)
-      @builder.extend(ctx.IDENTIFIER.getText)
     end
 
     def visitClass_name(ctx)
@@ -42,8 +40,40 @@ module Ruml
       ctx.IDENTIFIER.getText
     end
 
+    def visitInclude_def(ctx)
+      @member.module(:include, ctx.IDENTIFIER.getText)
+    end
+
+    def visitExtend_def(ctx)
+      @member.module(:extend, ctx.IDENTIFIER.getText)
+    end
+
+    def visitAttr_reader(ctx)
+      ctx.SYMBOL.each { |node| @member.attribute(node.getText, :r) }
+    end
+
+    def visitAttr_writter(ctx)
+      ctx.SYMBOL.each { |node| @member.attribute(node.getText, :w) }
+    end
+
+    def visitAttr_accessor(ctx)
+      ctx.SYMBOL.each { |node| @member.attribute(node.getText, :rw) }
+    end
+
+    def visitClass_method_def(ctx)
+      name = visit(ctx.class_method_name)
+      params = visit(ctx.params)
+      @member.method(name, params, :class)
+    end
+
+    def visitClass_method_name(ctx)
+      ctx.IDENTIFIER.getText
+    end
+
     def visitInstance_method_def(ctx)
-      @builder.method(visit(ctx.instance_method_name), visit(ctx.params))
+      name = visit(ctx.instance_method_name)
+      params = visit(ctx.params)
+      @member.method(name, params)
     end
 
     def visitParams(ctx)
@@ -59,7 +89,8 @@ module Ruml
     end
 
     def visitKeyword_param(ctx)
-      "#{ctx.KEYWORD_PARAM_NAME.getText}#{ctx.value ? " #{visit(ctx.value)}" : ''}"
+      value = ctx.value ? " #{visit(ctx.value)}" : ''
+      "#{ctx.KEYWORD_PARAM_NAME.getText}#{value}"
     end
 
     def visitDefault_param(ctx)
@@ -76,23 +107,6 @@ module Ruml
 
     def visitNumberValue(ctx)
       ctx.NUMBER.getText
-    end
-
-    private
-
-    def diagram(content)
-      <<-DOT.strip_heredoc
-digraph hierarchy {
-  size="5,5"
-  node[shape=record,style=filled,fillcolor=gray95]
-  edge[dir=back, arrowtail=empty]
-#{content}
-}
-DOT
-    end
-
-    def visit_and_join(nodes)
-      nodes.map { |node| visit(node) }.join('')
     end
   end
 end

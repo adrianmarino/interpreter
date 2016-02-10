@@ -3,6 +3,7 @@ import 'org.antlr.v4.runtime.CommonTokenStream'
 import 'java.io.FileInputStream'
 import 'RumlLexer'
 import 'RumlParser'
+
 require 'ruml/visitor_impl'
 
 module Ruml
@@ -20,8 +21,10 @@ module Ruml
       @parser       = RumlParser.new(token_stream)
     end
 
-    def compile
-      VisitorImpl.new.visit(@parser.ruml)
+    def compile(options = Ruml::Dot::Options.default)
+      diagram = Ruml::Dot::ModelDiagram.new(options)
+      visitor = VisitorImpl.with(diagram)
+      visitor.visit(@parser.ruml)
     end
   end
 end
