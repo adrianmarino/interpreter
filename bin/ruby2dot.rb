@@ -7,7 +7,7 @@ require 'pry'
 
 input_path = ARGV[0]
 
-transpiler = Ruml::Ruby2DotTranspiler.from_path(input_path)
+transpiler = Ruml::Transpiler::Ruby2Dot.from_path(input_path)
 
 options = Ruml::Dot::Options.default
 

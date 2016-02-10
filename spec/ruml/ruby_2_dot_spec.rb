@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module Ruml
-  describe Ruby2DotTranspiler do
+module Ruml::Transpiler
+  describe Ruby2Dot do
     describe "#compile" do
       let(:class_options) do
         "shape=\"record\" style=\"rounded, filled\" fillcolor=\"#FFECDD\""
@@ -147,7 +147,7 @@ module Ruml
         end
 
         it "returns a module shape" do
-          expect(results).to include("\"Card\"[label=\"{Card (Mod)}\" #{module_options}]")
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{module_options}]")
         end
 
         it "return an include association" do
@@ -165,7 +165,7 @@ module Ruml
         end
 
         it "returns a module shape" do
-          expect(results).to include("\"Card\"[label=\"{Card (Mod)}\" #{module_options}]")
+          expect(results).to include("\"Card\"[label=\"{Card}\" #{module_options}]")
         end
 
         it "return an extend association" do

@@ -4,10 +4,10 @@ import 'java.io.FileInputStream'
 import 'RumlLexer'
 import 'RumlParser'
 
-require 'ruml/visitor_impl'
+require 'ruml/transpiler/visitor_impl'
 
-module Ruml
-  class Ruby2DotTranspiler
+module Ruml::Transpiler
+  class Ruby2Dot
     class << self
       def from_path(path)
         new(FileInputStream.new(path))

@@ -22,12 +22,12 @@ module Command
   end
 
   def generate_parser(output_path = Path::GRAMMAR_SRC)
-    system("cd #{Path::GRAMMAR}; antlr4 -no-listener -visitor #{GRAMMAR}.g4 -o ../../#{output_path}")
+    system("cd #{Path::GRAMMAR}; antlr4 -no-listener -visitor #{GRAMMAR}.g4 -o ../../../#{output_path}")
     self
   end
 
   def grun(input_file)
-    `cd #{Path::GRAMMAR_BUILD}; grun #{GRAMMAR} #{GRAMMAR.downcase} -gui ../../../#{input_file}`
+    `cd #{Path::GRAMMAR_BUILD}; grun #{GRAMMAR} #{GRAMMAR.downcase} -gui ../../../../#{input_file}`
   end
 
   def pry

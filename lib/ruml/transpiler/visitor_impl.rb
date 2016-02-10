@@ -1,8 +1,9 @@
 import 'RumlBaseVisitor'
 import 'RumlLexer'
+
 require 'ruml/dot/model_diagram'
 
-module Ruml
+module Ruml::Transpiler
   class VisitorImpl < RumlBaseVisitor
     class << self
       def with(diagram)

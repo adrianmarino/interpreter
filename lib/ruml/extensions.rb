@@ -9,3 +9,9 @@ class String
     singularize == self
   end
 end
+
+class Class
+  def simple_name
+    name.demodulize
+  end
+end

@@ -1,6 +1,6 @@
 require 'ruml/dot/options'
 require 'ruml/dot/helper'
-require 'ruml/dot/shape'
+require 'ruml/dot/shape/base'
 require 'ruml/extensions'
 
 module Ruml::Dot

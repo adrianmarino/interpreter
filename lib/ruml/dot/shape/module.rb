@@ -1,11 +1,9 @@
 require 'active_support/inflector'
 require 'ruml/dot/association'
-require 'ruml/dot/shape'
+require 'ruml/dot/shape/base'
 
-module Ruml::Dot
-  class ModuleShape
-    include Shape
-
+module Ruml::Dot::Shape
+  class Module < Base
     attr_reader :name
 
     def initialize(name, options)
@@ -57,7 +55,7 @@ module Ruml::Dot
           [ attr.singular? ? :one : :many, object.name ] if attr.singularize == object.name.downcase
         end.compact
         associations.each do |type, object_name|
-          append_assoc(Association.composition(@name, type, object_name))
+          append_assoc(Ruml::Dot::Association.composition(@name, type, object_name))
         end
       end
     end
@@ -70,7 +68,7 @@ module Ruml::Dot
     end
 
     def begin_box
-      @content = "#{@indentation}\"#{@name}\"[label=\"{#{@name} (Mod)"
+      @content = "#{@indentation}\"#{@name}\"[label=\"{#{@name}"
     end
 
     def end_box
@@ -99,7 +97,9 @@ module Ruml::Dot
     end
 
     def append_inclusions(member)
-      @members[member].each { |module_name| append_assoc(Association.inclusion(member, @name, module_name)) }
+      @members[member].each do |module_name|
+        append_assoc(Ruml::Dot::Association.inclusion(member, @name, module_name))
+      end
     end
   end
 end
