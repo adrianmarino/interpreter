@@ -33,4 +33,4 @@ Step 3: Generate dot diagram and display with xdot app.
 bin/ruby2dot.rb example/input.rb | xdot
 ```
 
-![alt Models Diagram](https://github.com/adrianmarino/ruml/blob/feature/general-refactor/example/output.png)
+![alt Models Diagram](https://raw.githubusercontent.com/adrianmarino/ruml/master/example/output.png)
