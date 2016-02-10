@@ -21,7 +21,7 @@ module Ruml
         it "returns a dot empty diagram" do
           expect(results).to eq(<<-DOT.strip_heredoc)
           digraph g {
-            graph[fontsize="30" labelloc="t" label="Models Diagram" splines="true" overlap="true"]
+            graph[fontsize="30" labelloc="t" label="Models" splines="true" overlap="true"]
 
           }
           DOT
@@ -44,7 +44,7 @@ module Ruml
         end
 
         it "return an inheritance association" do
-          expect(results).to include("\"Vehicle\"->\"Card\"[style=filled, label=Is]")
+          expect(results).to include("\"Card\"->\"Vehicle\"[style=filled, label=Is]")
         end
       end
 
@@ -79,7 +79,7 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include]")
+          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=Include]")
         end
       end
 
@@ -115,7 +115,7 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend]")
+          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=Extend]")
         end
       end
 
@@ -151,7 +151,7 @@ module Ruml
         end
 
         it "return an include association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Include]")
+          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=Include]")
         end
       end
 
@@ -169,7 +169,7 @@ module Ruml
         end
 
         it "return an extend association" do
-          expect(results).to include("\"Engine\"->\"Card\"[style=dotted, label=Extend]")
+          expect(results).to include("\"Card\"->\"Engine\"[style=dotted, label=Extend]")
         end
       end
 
