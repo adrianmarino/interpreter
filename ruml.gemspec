@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Ruby to class diagram.}
   spec.description   = %q{Allow generate uml class diagrams from ruby}
   spec.homepage      = "http://nonosoft.com.ar"
+  spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
