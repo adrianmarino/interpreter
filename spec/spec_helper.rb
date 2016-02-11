@@ -1,7 +1,5 @@
 require 'bundler/setup'
 Bundler.setup(:default, :test)
-require "ruml/path"
-Path.classes.each { |path| $CLASSPATH << path }
 require 'ruml'
 require 'pry'
 
