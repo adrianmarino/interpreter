@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
 require "bundler/setup"
-require "ruml/path"
-Path.classes.each { |path| $CLASSPATH << path }
-
 require "ruml"
 require 'irb'
 IRB.start

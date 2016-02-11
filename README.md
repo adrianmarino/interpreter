@@ -16,21 +16,25 @@ yaourt -S antlr4
 alias grun='java -cp .:/usr/share/java/antlr-complete.jar org.antlr.v4.runtime.misc.TestRig "$@"'
 ```
 
-###  Test
+### Install
 
-Step 2: Build parser.
 ```bash
-rake parser:build
+rake install:local
 ```
 
-Step 2: Test parser.
-```bash
-rake parser:tree[example/input.rb]
+### Use
+
+#### Generate dot diagram from irb
+
+```ruby
+require 'ruml'; Ruml::Transpiler::Ruby2Dot.from_path('example/input.rb').compile
 ```
 
-Step 3: Generate dot diagram and display with xdot app.
+#### Generate dot diagram with ruby2dot command
+
+Generate dot output and visualize in xdot viewer:
 ```bash
-bin/ruby2dot.rb example/input.rb | xdot
+bin/ruby2dot example/input.rb | xdot
 ```
 
 ![alt Models Diagram](https://raw.githubusercontent.com/adrianmarino/ruml/master/example/output.png)
