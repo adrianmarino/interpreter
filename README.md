@@ -22,8 +22,17 @@ alias grun='java -cp .:/usr/share/java/antlr-complete.jar org.antlr.v4.runtime.m
 
 ### Install
 
+Download repo and install gem:
+
 ```bash
+git clone https://github.com/adrianmarino/ruml.git
+cd ruml
 rake install:local
+```
+Or include in your Gemfile:
+
+```ruby
+gem 'ruml', git: 'https://github.com/adrianmarino/ruml.git', branch: 'master'
 ```
 
 ### Use
@@ -36,9 +45,11 @@ require 'ruml'; Ruml::Transpiler::Ruby2Dot.from_path('example/input.rb').compile
 
 #### Generate dot diagram with ruby2dot command
 
-Generate dot output and visualize in xdot viewer:
+Next command read an input ruby file and generate an output in dot language. Then redirect the output to xdot command.
+xdot is a dot viewer.
 ```bash
 bin/ruby2dot example/input.rb | xdot
 ```
+xdot output:
 
 ![alt Models Diagram](https://raw.githubusercontent.com/adrianmarino/ruml/master/example/output.png)
