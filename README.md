@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/adrianmarino/ruml.svg?branch=master)](https://travis-ci.org/adrianmarino/ruml)
+
 # Ruml
 
 Ruby to dot transpiler.
