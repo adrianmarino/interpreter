@@ -17,16 +17,23 @@ module Command
   end
 
   def javac(input_path = Path::GRAMMAR_SRC, output_path = Path::GRAMMAR_BUILD)
-    `javac #{input_path}/*.java -d #{output_path}`
+    system("javac -cp #{Path::ANTLR} #{input_path}/*.java -d #{output_path}")
     self
   end
 
   def generate_parser(output_path = Path::GRAMMAR_SRC)
-    system("cd #{Path::GRAMMAR}; antlr4 -no-listener -visitor #{GRAMMAR}.g4 -o ../../../#{output_path}")
+    command = "cd #{Path::GRAMMAR};"
+    command += "java -jar #{ANTLR_JAR} "
+    command += "-no-listener -visitor #{GRAMMAR}.g4 -o ../../../#{output_path}"
+    system(command)
     self
   end
 
   def grun(input_file)
-    `cd #{Path::GRAMMAR_BUILD}; grun #{GRAMMAR} #{GRAMMAR.downcase} -gui ../../../../#{input_file}`
+    command = "cd #{Path::GRAMMAR_BUILD};"
+    command += "java -cp .:../#{ANTLR_JAR} org.antlr.v4.runtime.misc.TestRig "
+    command += "#{GRAMMAR} #{GRAMMAR.downcase} -gui ../../../../#{input_file}"
+    puts command
+    `#{command}`
   end
 end

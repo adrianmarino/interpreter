@@ -8,16 +8,16 @@ Ruby to dot transpiler.
 
 ###  Requisites
 
-* JRuby
+* Java 7: g.e. install using jenv:
+```bash
+$ curl -L -s get.jenv.io | bash
+jenv install java 1.7.0_75
+```
+
+* JRuby: g.e. install using rvm
 ```bash
 rvm install jruby
 rvm use jruby
-```
-
-* Antlr4 (On Arch linux)
-```bash
-yaourt -S antlr4
-alias grun='java -cp .:/usr/share/java/antlr-complete.jar org.antlr.v4.runtime.misc.TestRig "$@"'
 ```
 
 ### Install
