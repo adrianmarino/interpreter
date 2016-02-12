@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/adrianmarino/ruml.svg?branch=master)](https://travis-ci.org/adrianmarino/ruml)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://badges.mit-license.org)
+
 
 # Ruml
 
