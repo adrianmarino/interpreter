@@ -55,14 +55,7 @@ class Engine
   attr_accessor :oil_level
 end
 
-class Tire
-  attr_reader :air, :inches
-  def initialize(air, inches)
-  end
-end
-
 class Wheel
-  attr_reader :tire
   def Wheel.basic
   end
   def Wheel.sport
