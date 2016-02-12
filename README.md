@@ -8,13 +8,13 @@ Ruby to dot transpiler.
 
 ###  Requisites
 
-* Java 7: g.e. install using jenv:
+* Java 7: i.e. install using jenv:
 ```bash
 $ curl -L -s get.jenv.io | bash
 jenv install java 1.7.0_75
 ```
 
-* JRuby: g.e. install using rvm
+* JRuby: i.e. install using rvm
 ```bash
 rvm install jruby
 rvm use jruby
