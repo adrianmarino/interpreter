@@ -6,12 +6,7 @@ module Path
   GRAMMAR_BUILD = "#{GRAMMAR}/build"
   RUBY_SRC      = "lib/ruml"
 
-  def classes
-    [GRAMMAR_BUILD, ANTLR_LIB]
+  def class_path
+    ["ruml/grammar/build", "ruml/grammar/antlr.jar"]
   end
-
-  private
-
-  ANTLR_LIB = "/usr/share/java/antlr-complete.jar"
-
 end

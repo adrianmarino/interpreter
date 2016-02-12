@@ -29,12 +29,4 @@ module Command
   def grun(input_file)
     `cd #{Path::GRAMMAR_BUILD}; grun #{GRAMMAR} #{GRAMMAR.downcase} -gui ../../../../#{input_file}`
   end
-
-  def pry
-    execute(:pry)
-  end
-
-  def execute(command, class_path = Path.classes)
-    exec "ruby -J-cp #{class_path.join(':')} -I #{Path::GRAMMAR_SRC} -S #{command.to_s}"
-  end
 end
