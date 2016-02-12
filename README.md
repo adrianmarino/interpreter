@@ -42,7 +42,3 @@ bin/ruby2dot example/input.rb | xdot
 ```
 
 ![alt Models Diagram](https://raw.githubusercontent.com/adrianmarino/ruml/master/example/output.png)
-
-## License
-
-Ruml is released under the [MIT License](http://www.opensource.org/licenses/MIT).
