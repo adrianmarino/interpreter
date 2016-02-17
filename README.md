@@ -45,7 +45,7 @@ require 'ruml'; Ruml::Transpiler::Ruby2Dot.from_path('example/input.rb').compile
 
 #### Generate dot diagram with ruby2dot command
 
-Next command read an input ruby file and generate an output in dot language. Then redirect the output to xdot command.
+Next command read an [input ruby file](example/input.rb) and generate an output in dot language. Then redirect the output to xdot command.
 xdot is a dot viewer.
 ```bash
 bin/ruby2dot example/input.rb | xdot
